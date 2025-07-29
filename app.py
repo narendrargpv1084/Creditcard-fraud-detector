@@ -5,30 +5,25 @@ import time
 import joblib
 from PIL import Image
 
-# --- Page Config ---
-st.set_page_config(page_title="Credit Card Fraud Detector", page_icon="💳", layout="wide")
+st.set_page_config(page_title="Credit Card Fraud Detector", layout="wide")
 
-# --- Load Model ---
 model = joblib.load("model.pkl")
 
-# --- Load Logo ---
 logo = Image.open("logo.png")
 st.image(logo, width=120)
 
-# --- Title & Description ---
 st.markdown("<h1 style='text-align: center;'>Credit Card Fraud Detector</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align: center;'>Detect fraudulent credit card transactions using a trained ML model.</p>", unsafe_allow_html=True)
 st.markdown("---")
 
-# --- Upload CSV ---
-st.markdown("### 📁 Upload your <code>creditcard.csv</code>", unsafe_allow_html=True)
+st.markdown("###  Upload your <code>creditcard.csv</code>", unsafe_allow_html=True)
 uploaded_file = st.file_uploader("Drag and drop file here", type=["csv"])
 
 if uploaded_file is not None:
-    st.success("File uploaded successfully! 🚀")
+    st.success("File uploaded successfully! ")
 
-    with st.spinner("🔍 Predicting fraud transactions... Please wait"):
-        time.sleep(1)  # Simulate loading
+    with st.spinner(" Predicting fraud transactions... Please wait"):
+        time.sleep(1)  
         df = pd.read_csv(uploaded_file)
 
         if 'Class' in df.columns:
@@ -40,33 +35,29 @@ if uploaded_file is not None:
         fraud_count = df['Prediction'].value_counts().get('Fraud', 0)
         total_count = len(df)
 
-    # --- Results Display ---
-    st.success("✅ Prediction complete!")
-    st.subheader("📊 Prediction Results")
+    st.success(" Prediction complete!")
+    st.subheader(" Prediction Results")
     st.dataframe(df, use_container_width=True)
 
-    # --- Summary Box ---
     st.markdown(
         f"<div style='background-color:#ffc107; padding:10px; border-radius:8px; text-align:center;'>"
-        f"⚠️ <strong>{fraud_count}</strong> Fraudulent transactions detected out of <strong>{total_count}</strong>."
+        f" <strong>{fraud_count}</strong> Fraudulent transactions detected out of <strong>{total_count}</strong>."
         f"</div>",
         unsafe_allow_html=True
     )
 
-    # --- Download Button ---
-    st.markdown("### 📥 Download Results")
+    st.markdown("### Download Results")
     csv_data = df.to_csv(index=False).encode('utf-8')
     st.download_button(
-        label="⬇️ Download Predictions as CSV",
+        label="⬇Download Predictions as CSV",
         data=csv_data,
         file_name='fraud_predictions.csv',
         mime='text/csv',
         use_container_width=True
     )
 
-# --- Footer ---
 st.markdown("---")
 st.markdown(
-    "<p style='text-align: center; color: gray;'>Made with ❤️ by <strong>Narendra Singh Rajput</strong></p>",
+    "<p style='text-align: center; color: gray;'>Made  by <strong>Narendra Singh Rajput</strong></p>",
     unsafe_allow_html=True
 )

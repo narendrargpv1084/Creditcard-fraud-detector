@@ -34,6 +34,3 @@ print("Classification Report:\n", report)
 
 joblib.dump(model, 'model.pkl')
 print(" Model saved as model.pkl")
-
-print("Program exit.......")
-
